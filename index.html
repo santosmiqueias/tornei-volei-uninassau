@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Torneio de Vôlei 2026</title>
+    <!-- Biblioteca jsPDF para geração de PDF direto no cliente (navegador) -->
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Conexão com o CSS externo -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- QUESTÃO 02: Tag semântica <nav> para links de navegação -->
+    <header>
+        <div class="header-inner">
+            <a href="#topo" class="marca"
+                aria-label="Torneio de Vôlei 2026 - início">
+                <svg class="marca-icone" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" />
+                    <path
+                        d="M12 2a10 10 0 0 1 4.5 9.5M12 12a10 10 0 0 1-8.7 5M12 12a10 10 0 0 0 9.4 3.5M12 12c-2.5-2-3.6-5.5-3-9.4M12 12c-.6 3.2-3 6-6.6 7.6M12 12c3 .4 6 2.5 7.3 6" />
+                </svg>
+                <span>Vôlei <strong>2026</strong></span>
+            </a>
+            <nav>
+                <a href="#inscricao"><span class="nav-num">1</span>Inscrição</a>
+                <a href="#checkin"><span class="nav-num">2</span>Check-in</a>
+                <a href="#kit"><span class="nav-num">3</span>Retirada de Kit</a>
+                <a href="#certificado"><span
+                        class="nav-num">4</span>Certificados</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="hero" id="topo">
+        <!-- Cena em CSS 3D: quadra deitada com rotateX, rede em pé com rotateY
+             e bola (anéis girados) quicando sobre a rede -->
+        <div class="cena-quadra" aria-hidden="true">
+            <div class="quadra">
+                <div class="rede"></div>
+            </div>
+            <div class="bola-sombra"></div>
+            <div class="bola-3d">
+                <div class="bola">
+                    <span></span><span></span><span></span>
+                    <span></span><span></span><span></span>
+                    <span class="lat lat-1"></span>
+                    <span class="lat lat-2"></span>
+                    <span class="lat lat-3"></span>
+                </div>
+            </div>
+        </div>
+        <p class="hero-tag">Campeonato de Vôlei da UNINASSAU</p>
+        <h1>Torneio de Vôlei <span>2026</span></h1>
+        <p class="hero-desc">Inscrição, check-in, retirada de kit e certificado,
+            tudo em um só lugar.</p>
+        <ul class="hero-stats">
+            <li><strong>4</strong><span>sessões</span></li>
+            <li><strong>75%</strong><span>frequência mínima</span></li>
+            <li><strong>PDF</strong><span>certificado na hora</span></li>
+        </ul>
+    </div>
+
+    <!-- QUESTÃO 01: Tag semântica <main> (única por página) para conteúdo principal -->
+    <main>
+        <section id="inscricao">
+            <div class="card-head">
+                <span class="etapa">1</span>
+                <div>
+                    <h2>Inscrição e QR Code</h2>
+                    <p class="card-desc">Cadastre o atleta e gere o QR Code de
+                        credenciamento.</p>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <label class="campo">
+                    <span>Nome completo</span>
+                    <input type="text" id="nome-atleta" autocomplete="name"
+                        placeholder="Nome completo do atleta">
+                </label>
+                <label class="campo">
+                    <span>CPF</span>
+                    <input type="text" id="cpf-atleta" inputmode="numeric"
+                        placeholder="CPF (apenas números)">
+                </label>
+            </div>
+            <button id="btn-inscrever">Realizar Inscrição</button>
+            <p id="status-inscricao" class="status" role="status"
+                aria-live="polite"></p>
+
+            <!-- QUESTÃO 09: Tag <img> com atributos src (dinâmico) e alt (acessibilidade) -->
+            <div id="area-qr">
+                <p id="saudacao"></p>
+                <img id="img-qr" src=""
+                    alt="QR Code de credenciamento do atleta" width="160"
+                    height="160">
+                <p class="qr-dica">Apresente este QR Code no check-in de cada
+                    sessão.</p>
+            </div>
+        </section>
+
+        <section id="checkin">
+            <div class="card-head">
+                <span class="etapa">2</span>
+                <div>
+                    <h2>Check-in</h2>
+                    <p class="card-desc">Total do evento: 4 sessões. Cada
+                        leitura registra +1 presença.</p>
+                </div>
+            </div>
+
+            <label class="campo">
+                <span>CPF do atleta</span>
+                <input type="text" id="cpf-checkin" inputmode="numeric"
+                    placeholder="Digite ou leia o CPF do QR Code">
+            </label>
+            <button id="btn-checkin">Registrar Presença (+1)</button>
+            <p id="status-checkin" class="status" role="status"
+                aria-live="polite"></p>
+
+            <div class="presencas" id="presencas" hidden>
+                <div class="presencas-topo">
+                    <span>Frequência</span>
+                    <strong id="presencas-pct">0%</strong>
+                </div>
+                <div class="sessoes" aria-hidden="true">
+                    <span></span><span></span><span></span><span></span>
+                </div>
+                <div class="presencas-meta"><span>Meta para o certificado: 75%
+                        (3 de 4)</span></div>
+            </div>
+        </section>
+
+        <section id="kit">
+            <div class="card-head">
+                <span class="etapa">3</span>
+                <div>
+                    <h2>Retirada de Kit do Atleta</h2>
+                    <p class="card-desc">Confirme a entrega e gere o comprovante
+                        em 2 vias.</p>
+                </div>
+            </div>
+
+            <div class="grid-2 grid-kit">
+                <label class="campo">
+                    <span>CPF do atleta</span>
+                    <input type="text" id="cpf-kit" inputmode="numeric"
+                        placeholder="CPF do atleta (apenas números)">
+                </label>
+                <label class="campo">
+                    <span>Tamanho da camisa</span>
+                    <select id="tamanho-camisa" aria-label="Tamanho da camisa">
+                        <option value="PP">Camisa PP</option>
+                        <option value="P">Camisa P</option>
+                        <option value="M" selected>Camisa M</option>
+                        <option value="G">Camisa G</option>
+                        <option value="GG">Camisa GG</option>
+                    </select>
+                </label>
+            </div>
+            <ul class="kit-itens">
+                <li>Camisa oficial</li>
+                <li>Número / crachá</li>
+                <li>Squeeze</li>
+                <li>Pulseira</li>
+            </ul>
+            <button id="btn-kit">Confirmar Retirada e Gerar Comprovante</button>
+            <p id="status-kit" class="status" role="status" aria-live="polite">
+            </p>
+        </section>
+
+        <section id="certificado">
+            <div class="card-head">
+                <span class="etapa">4</span>
+                <div>
+                    <h2>Certificado de Atleta</h2>
+                    <p class="card-desc">Liberado para quem atingir no mínimo
+                        75% de frequência.</p>
+                </div>
+            </div>
+
+            <p id="status-certificado" class="status status-info">
+                Faça o check-in do atleta para verificar se o certificado está
+                liberado.
+            </p>
+            <button id="btn-pdf" class="btn-destaque" disabled>Baixar
+                Certificado de Atleta em PDF</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>Torneio de Vôlei 2026 · 6ª Semana Acadêmica UNINASSAU</p>
+    </footer>
+
+    <!-- Conexão com o JavaScript externo (no fim do body, após o DOM existir) -->
+    <script src="script.js"></script>
+</body>
+
+</html>
