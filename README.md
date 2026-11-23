@@ -8,10 +8,20 @@ Site do Campeonato de Vôlei da 6ª Semana Acadêmica UNINASSAU. Reúne em uma �
 
 | Etapa | O que faz |
 | --- | --- |
-| 1. Inscrição | Cadastra o atleta (nome e CPF) e gera um QR Code de credenciamento |
-| 2. Check-in | Registra presença pelo CPF (+1 por sessão, de um total de 4) e mostra a frequência |
-| 3. Retirada de kit | Confirma a entrega do kit e gera um comprovante em PDF com 2 vias (atleta e organização); se o kit já foi retirado, emite 2ª via |
-| 4. Certificado | Liberado com frequência mínima de **75%** (3 de 4 sessões); gerado em PDF direto no navegador |
+| 1. Inscrição | Cadastra o atleta com validação de nome completo e CPF (dígitos verificadores), bloqueia CPF duplicado e gera o QR Code de credenciamento, com opção de imprimir a credencial |
+| 2. Check-in | Registra +1 presença por sessão (Sessão 1 a 4), sem contar duas vezes a mesma sessão; lê o QR Code pela câmera em navegadores compatíveis (Chrome/Android) |
+| 3. Retirada de kit | Confirma a entrega e gera um comprovante em PDF com 2 vias (atleta e organização); se o kit já foi retirado, emite 2ª via |
+| 4. Certificado | Consulta pelo CPF; liberado com frequência mínima de **75%** (3 de 4 sessões); PDF gerado no navegador com código de verificação fixo |
+| ★ Painel | Contadores (inscritos, check-ins, kits e certificados), lista de atletas com busca, exportação para CSV (abre no Excel) e opção de apagar os dados |
+
+Outros cuidados:
+
+- Máscara de CPF nos campos e envio com a tecla Enter
+- Funciona bem no celular e respeita quem prefere menos animação
+- Acessível por teclado e leitor de tela (link "pular para o conteúdo", mensagens anunciadas, campos com erro marcados)
+- Nomes exibidos com `textContent`, sem risco de injeção de HTML
+- Compatível com os dados salvos pela versão anterior
+- Sincroniza entre abas abertas ao mesmo tempo
 
 ## Tecnologias
 
@@ -30,7 +40,9 @@ tornei-volei-uninassau/
 ├── css/
 │   └── style.css   # Estilos e animações
 ├── js/
-│   └── script.js   # Lógica de inscrição, check-in, kit e PDFs
+│   └── script.js   # Lógica de inscrição, check-in, kit, PDFs e painel
+├── assets/
+│   └── favicon.svg # Ícone da aba
 ├── .editorconfig
 ├── .gitignore
 └── README.md
