@@ -203,6 +203,7 @@ main {
     margin: 24px auto;
     padding: 0 16px;
     display: grid;
+    grid-template-columns: minmax(0, 1fr);   /* a tabela larga rola dentro do card, sem alargar a página */
     gap: 20px;
 }
 
@@ -477,6 +478,7 @@ footer::before {
     margin: 0 auto 8px;
     perspective: 700px;                /* profundidade da cena 3D */
     perspective-origin: 50% 10%;
+    pointer-events: none;              /* a rede girada em 3D não pode bloquear cliques na página */
 }
 
 /* Quadra: um retângulo 2:1 (18 m x 9 m) deitado com rotateX */
@@ -698,6 +700,365 @@ button:disabled {
     transform: rotateX(360deg);
 }
 
+/* ================= ACESSIBILIDADE ================= */
+[hidden] {
+    display: none !important;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Link "Pular para o conteúdo": aparece só ao navegar pelo teclado */
+.pular-conteudo {
+    position: absolute;
+    left: 16px;
+    top: -60px;
+    z-index: 20;
+    padding: 10px 16px;
+    border-radius: 6px;
+    background: var(--amarelo);
+    color: var(--fundo);
+    font-weight: bold;
+    text-decoration: none;
+    transition: top .2s;
+}
+
+.pular-conteudo:focus {
+    top: 12px;
+}
+
+/* Campo com erro de validação */
+input[aria-invalid] {
+    outline: 3px solid #ef4444;
+    background: #fef2f2;
+}
+
+/* ================= VARIAÇÕES DE BOTÃO ================= */
+.btn-secundario {
+    background: transparent;
+    color: var(--amarelo);
+    border: 2px solid var(--amarelo);
+    box-shadow: none;
+}
+
+.btn-secundario:hover:not(:disabled) {
+    background: rgba(250, 204, 21, .12);
+}
+
+.btn-secundario:active:not(:disabled) {
+    transform: translateY(1px);
+    box-shadow: none;
+}
+
+.btn-secundario:disabled {
+    background: transparent;
+    border-color: #475569;
+    color: var(--texto-3);
+    box-shadow: none;
+}
+
+.btn-perigo {
+    background: transparent;
+    color: #fca5a5;
+    border: 2px solid rgba(239, 68, 68, .6);
+    box-shadow: none;
+    font-size: .85rem;
+}
+
+.btn-perigo:hover:not(:disabled) {
+    background: rgba(239, 68, 68, .15);
+}
+
+.btn-perigo:disabled {
+    background: transparent;
+    border-color: #334155;
+    color: #475569;
+    box-shadow: none;
+}
+
+.btn-inline {
+    width: auto;
+    padding: 8px 16px;
+}
+
+/* Campo de texto com um botão ao lado (QR Code / Consultar) */
+.campo > .campo-com-acao {
+    display: flex;
+    font-size: 1rem;
+    font-weight: normal;
+    gap: 8px;
+    align-items: stretch;
+}
+
+.campo-com-acao input {
+    flex: 1;
+    min-width: 0;
+}
+
+.btn-icone {
+    flex: none;
+    width: 46px;
+    padding: 0;
+    display: grid;
+    place-items: center;
+}
+
+.btn-icone svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.btn-consultar {
+    width: auto;
+    flex: none;
+    padding: 0 18px;
+}
+
+.grid-checkin {
+    grid-template-columns: 1.4fr 1fr;
+}
+
+/* ================= AJUSTES DAS ETAPAS ================= */
+#img-qr {
+    width: 160px;
+    height: 160px;
+}
+
+.qr-cpf {
+    margin: 8px 0 0;
+    font-family: var(--fonte-titulo);
+    letter-spacing: .04em;
+    color: var(--texto);
+}
+
+#area-qr .btn-inline {
+    margin-top: 12px;
+}
+
+.sessoes-rotulos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    margin-top: 4px;
+    font-size: .7rem;
+    color: var(--texto-3);
+    text-align: center;
+}
+
+.nav-num-painel,
+.etapa-painel {
+    background: var(--azul);
+}
+
+.etapa-painel {
+    box-shadow: 0 3px 0 #1e3a8a;
+}
+
+/* ================= PAINEL DA ORGANIZAÇÃO ================= */
+.painel {
+    border-top-color: var(--azul);
+}
+
+/* A tabela não inclina no hover para continuar legível */
+.painel:hover {
+    transform: none;
+    box-shadow: 0 0 0 1px rgba(29, 78, 216, .45);
+}
+
+.painel-stats {
+    list-style: none;
+    margin: 4px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.painel-stats li {
+    padding: 10px;
+    border-radius: 8px;
+    background: var(--card-2);
+    border-left: 4px solid var(--laranja);
+    text-align: center;
+}
+
+.painel-stats strong {
+    display: block;
+    font-family: var(--fonte-titulo);
+    font-size: 1.4rem;
+    color: var(--amarelo);
+    font-variant-numeric: tabular-nums;
+}
+
+.painel-stats span {
+    font-size: .72rem;
+    color: var(--texto-3);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.painel-ferramentas {
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+    margin-top: 8px;
+}
+
+.campo-busca {
+    flex: 1;
+}
+
+.painel-ferramentas .btn-secundario {
+    width: auto;
+    padding: 10px 16px;
+    white-space: nowrap;
+}
+
+.tabela-wrap {
+    margin-top: 12px;
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid var(--borda);
+    background: var(--card-2);
+}
+
+.tabela {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .88rem;
+}
+
+.tabela th,
+.tabela td {
+    padding: 10px 12px;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.tabela th {
+    position: sticky;
+    top: 0;
+    background: #0d1c42;
+    color: var(--texto-3);
+    font-size: .72rem;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.tabela tbody tr {
+    border-top: 1px solid var(--borda);
+}
+
+.tabela tbody tr:hover {
+    background: rgba(255, 255, 255, .04);
+}
+
+.tabela .col-nome {
+    font-weight: bold;
+    white-space: normal;
+    min-width: 160px;
+}
+
+.tabela .col-cpf {
+    font-variant-numeric: tabular-nums;
+    color: var(--texto-2);
+}
+
+.tabela-vazia {
+    margin: 0;
+    padding: 20px;
+    text-align: center;
+    color: var(--texto-3);
+}
+
+.selo {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: .75rem;
+    font-weight: bold;
+}
+
+.selo-ok {
+    background: rgba(34, 197, 94, .15);
+    color: #86efac;
+}
+
+.selo-aviso {
+    background: rgba(250, 204, 21, .12);
+    color: #fde68a;
+}
+
+.selo-neutro {
+    background: rgba(148, 163, 184, .15);
+    color: var(--texto-2);
+}
+
+.painel .btn-perigo {
+    margin-top: 14px;
+}
+
+/* ================= RODAPÉ ================= */
+footer p {
+    margin: 4px 0;
+}
+
+.footer-nota {
+    font-size: .78rem;
+}
+
+footer a {
+    color: var(--texto-2);
+}
+
+footer a:hover,
+footer a:focus-visible {
+    color: var(--amarelo);
+}
+
+/* ================= LEITOR DE QR CODE ================= */
+.dialog-qr {
+    width: min(420px, calc(100% - 32px));
+    padding: 20px;
+    border: 1px solid var(--borda);
+    border-top: 4px solid var(--laranja);
+    border-radius: 10px;
+    background: var(--card);
+    color: var(--texto);
+}
+
+.dialog-qr::backdrop {
+    background: rgba(5, 10, 25, .8);
+}
+
+.dialog-qr h2 {
+    font-size: 1.05rem;
+    margin-bottom: 12px;
+}
+
+.dialog-qr video {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 8px;
+    background: #000;
+    border: 3px solid var(--amarelo);
+}
+
 /* ================= RESPONSIVO ================= */
 @media (max-width: 720px) {
     header {
@@ -721,7 +1082,8 @@ button:disabled {
 @media (max-width: 560px) {
 
     .grid-2,
-    .grid-kit {
+    .grid-kit,
+    .grid-checkin {
         grid-template-columns: 1fr;
     }
 
@@ -731,6 +1093,19 @@ button:disabled {
 
     .hero h1 {
         font-size: 1.8rem;
+    }
+
+    .painel-stats {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .painel-ferramentas {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .painel-ferramentas .btn-secundario {
+        width: 100%;
     }
 }
 
@@ -754,5 +1129,52 @@ button:disabled {
     .sessoes span,
     .hero-stats li {
         transition: none;
+    }
+}
+
+/* ================= IMPRESSÃO ================= */
+@media print {
+    body {
+        background: #fff;
+        color: #000;
+    }
+
+    header,
+    .hero,
+    footer,
+    .pular-conteudo,
+    button,
+    .dialog-qr {
+        display: none !important;
+    }
+
+    section {
+        box-shadow: none !important;
+        transform: none !important;
+        background: #fff;
+        color: #000;
+        border-color: #ccc;
+    }
+
+    /* Ao imprimir a credencial, mostra só o QR Code do atleta */
+    .imprimindo-credencial main > section:not(#inscricao),
+    .imprimindo-credencial #inscricao > :not(#area-qr) {
+        display: none !important;
+    }
+
+    .imprimindo-credencial #inscricao {
+        border: 2px dashed #000;
+        max-width: 320px;
+        margin: 0 auto;
+    }
+
+    #saudacao,
+    .qr-cpf,
+    .qr-dica {
+        color: #000;
+    }
+
+    #img-qr {
+        animation: none;
     }
 }

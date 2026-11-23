@@ -1,2 +1,16 @@
+# PDFs gerados nos testes (certificados e comprovantes)
 *.pdf
+
+# Sistema operacional
 .DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.vscode/
+.idea/
+*.swp
+
+# Dependências / logs (caso o projeto cresça)
+node_modules/
+*.log
