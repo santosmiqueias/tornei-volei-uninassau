@@ -67,3 +67,7 @@ Depois abra o `index.html` (ou use a extensão *Live Server* do VS Code).
 
 **Miqueias Santos** — Análise e Desenvolvimento de Sistemas, UNINASSAU
 [@santosmiqueias](https://github.com/santosmiqueias)
+
+## Licença
+
+Código sob a licença [MIT](LICENSE). O nome e as marcas da UNINASSAU pertencem à instituição.
