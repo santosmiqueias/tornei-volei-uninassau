@@ -4,6 +4,8 @@ Site do Campeonato de Vôlei da 6ª Semana Acadêmica UNINASSAU. Reúne em uma �
 
 🔗 **Acesse:** https://santosmiqueias.github.io/tornei-volei-uninassau/
 
+![Página inicial do site do torneio](docs/print-inicio.jpg)
+
 ## Funcionalidades
 
 | Etapa | O que faz |
