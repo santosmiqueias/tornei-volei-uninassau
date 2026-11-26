@@ -29,7 +29,7 @@ Outros cuidados:
 - **CSS3** com cena 3D animada (quadra, rede e bola) e layout responsivo
 - **JavaScript** puro (sem frameworks)
 - [**jsPDF**](https://github.com/parallax/jsPDF) para gerar o certificado e o comprovante no navegador
-- [**QR Code API**](https://goqr.me/api/) (api.qrserver.com) para o QR Code de credenciamento
+- [**qrcodejs**](https://github.com/davidshimjs/qrcodejs) para gerar o QR Code de credenciamento no próprio navegador (o CPF não sai do computador do usuário)
 - **localStorage** para guardar os inscritos no próprio navegador
 
 ## Estrutura do projeto
@@ -40,7 +40,9 @@ tornei-volei-uninassau/
 ├── css/
 │   └── style.css   # Estilos e animações
 ├── js/
-│   └── script.js   # Lógica de inscrição, check-in, kit, PDFs e painel
+│   ├── script.js   # Lógica de inscrição, check-in, kit, PDFs e painel
+│   └── vendor/
+│       └── qrcode.min.js  # Biblioteca de QR Code (qrcodejs)
 ├── assets/
 │   └── favicon.svg # Ícone da aba
 ├── .editorconfig

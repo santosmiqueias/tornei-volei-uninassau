@@ -234,15 +234,27 @@ function exibirQrCode(atleta) {
     $("#qr-cpf").textContent = `CPF ${formatarCPF(atleta.cpf)}`;
 
     // QUESTÃO 09: Injeção dinâmica no atributo src e atualização do alt
+    // O QR Code é gerado no próprio navegador: o CPF não é enviado para nenhum site externo.
     const imgQr = $("#img-qr");
-    imgQr.onerror = () => {
+    const qr = gerarQrDataURL(atleta.cpf);
+    if (!qr) {
         imgQr.hidden = true;
-        $("#qr-cpf").textContent = `Sem conexão para gerar o QR Code. Use o CPF ${formatarCPF(atleta.cpf)} no check-in.`;
-    };
-    imgQr.hidden = false;
-    imgQr.src = `https://api.qrserver.com/v1/create-qr-code/?size=320x320&margin=0&data=${encodeURIComponent(atleta.cpf)}`;
+        $("#qr-cpf").textContent = `Não foi possível gerar o QR Code. Use o CPF ${formatarCPF(atleta.cpf)} no check-in.`;
+    } else {
+        imgQr.hidden = false;
+        imgQr.src = qr;
+    }
     imgQr.alt = `QR Code de inscrição do participante ${atleta.nome}`;
     $("#area-qr").style.display = "block";
+}
+
+// Gera o QR Code como imagem (dataURL) usando a biblioteca qrcodejs, sem internet
+function gerarQrDataURL(texto) {
+    if (typeof QRCode === "undefined") return "";
+    const tmp = document.createElement("div");
+    new QRCode(tmp, { text: texto, width: 320, height: 320, colorDark: "#000000", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M });
+    const canvas = tmp.querySelector("canvas");
+    return canvas ? canvas.toDataURL("image/png") : (tmp.querySelector("img")?.src || "");
 }
 
 $("#btn-imprimir-qr").addEventListener("click", () => {
